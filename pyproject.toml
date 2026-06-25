@@ -1,0 +1,12 @@
+[tool.black]
+line-length = 79
+target-version = ['py312']
+
+[tool.isort]
+profile = "black"
+line_length = 79
+
+[tool.djlint]
+profile = "jinja"
+indent = 2
+ignore = "H005,H016,H030,H031,H021,H006,J018,T001"
