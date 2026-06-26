@@ -1,0 +1,136 @@
+<mxfile host="Electron">
+  <diagram name="Навигация" id="tg-nav-map">
+    <mxGraphModel dx="1414" dy="849" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1240" pageHeight="760" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="home" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" value="Главное меню&#xa;(состав кнопок по ролям&#xa;пользователя)" vertex="1">
+          <mxGeometry height="60" width="240" x="500" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="prog-main" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="📅 Программа&#xa;(сейчас / дальше)" vertex="1">
+          <mxGeometry height="60" width="200" x="40" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ask-input" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="❓ Ввод вопроса&#xa;(активный спикер)" vertex="1">
+          <mxGeometry height="60" width="200" x="280" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="net-intro" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="🤝 Нетворкинг&#xa;(вступление)" vertex="1">
+          <mxGeometry height="60" width="200" x="520" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="donate-amount" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="💰 Выбор суммы&#xa;(100/300/500/своя)" vertex="1">
+          <mxGeometry height="60" width="200" x="760" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="spk-list" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" value="🎤 Мой доклад&#xa;[▶️ Начать] / [⏹ Завершить]&#xa;+ список вопросов (5/стр)" vertex="1">
+          <mxGeometry height="60" width="200" x="1000" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="prog-full" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="🗓 Полная программа&#xa;(пагинация)" vertex="1">
+          <mxGeometry height="60" width="200" x="40" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="ask-confirm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="✅ Подтверждение" vertex="1">
+          <mxGeometry height="60" width="200" x="280" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="net-form" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="✍️ Анкета&#xa;bio → stack → contact" vertex="1">
+          <mxGeometry height="60" width="200" x="520" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="donate-confirm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="💚 Подтверждение&#xa;(Donation: paid)" vertex="1">
+          <mxGeometry height="60" width="200" x="760" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="spk-detail" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" value="✉️ Деталь вопроса&#xa;(✅ answered)" vertex="1">
+          <mxGeometry height="60" width="200" x="1000" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="ask-noactive" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" value="❌ Нет активного&#xa;доклада" vertex="1">
+          <mxGeometry height="60" width="200" x="280" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="net-match" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="👤 Матч&#xa;(одна анкета, manual next)" vertex="1">
+          <mxGeometry height="60" width="200" x="520" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="net-empty" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" value="💤 Пустой пул&#xa;(нотификация позже)" vertex="1">
+          <mxGeometry height="60" width="200" x="520" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-menu" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;align=left;spacingLeft=8;verticalAlign=middle;" value="Кнопка [ Меню ] есть на ЛЮБОМ экране, кроме Главного меню — она возвращает в Главное меню.&#xa;Навигация — edit-in-place: бот редактирует одно сообщение при переходах." vertex="1">
+          <mxGeometry height="90" width="580" x="40" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-role" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;align=left;spacingLeft=8;verticalAlign=middle;" value="Роли (модель UserRole, несколько на пользователя):&#xa;• GUEST — программа, спросить, нетворкинг, донат (зелёные)&#xa;• SPEAKER — + 🎤 Мой доклад: старт/стоп + вопросы (оранжевые)&#xa;• ORGANIZER — флоу вне бота, кнопок не добавляет&#xa;Состав кнопок Главного меню = объединение по ролям.&#xa;&#xa;Доклад (Talk.state): planned → active → finished.&#xa;Активный доклад один на всё мероприятие; finished необратим.&#xa;Гости спрашивают только при state=active." vertex="1">
+          <mxGeometry height="90" width="560" x="640" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="e-home-prog" edge="1" parent="1" source="home" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;endArrow=classic;" target="prog-main">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-home-ask" edge="1" parent="1" source="home" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;endArrow=classic;" target="ask-input">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-home-net" edge="1" parent="1" source="home" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;endArrow=classic;" target="net-intro">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-home-donate" edge="1" parent="1" source="home" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;endArrow=classic;" target="donate-amount">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-home-spk" edge="1" parent="1" source="home" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d79b00;endArrow=classic;fontColor=#d79b00;fontSize=10;" target="spk-list" value="только SPEAKER">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-prog-full" edge="1" parent="1" source="prog-main" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;endArrow=classic;fontSize=10;" target="prog-full" value="Полная программа">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-ask-confirm" edge="1" parent="1" source="ask-input" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;endArrow=classic;fontSize=10;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ask-confirm" value="вопрос отправлен">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="380" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-ask-noactive" edge="1" parent="1" source="ask-input" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#b85450;endArrow=classic;fontColor=#b85450;fontSize=10;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ask-noactive" value="нет active talk">
+          <mxGeometry relative="1" x="0.0857" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="430" y="230" />
+              <mxPoint x="490" y="230" />
+              <mxPoint x="490" y="380" />
+              <mxPoint x="380" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-net-form" edge="1" parent="1" source="net-intro" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;endArrow=classic;fontSize=10;" target="net-form" value="заполнить">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-net-match" edge="1" parent="1" source="net-form" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;endArrow=classic;fontSize=10;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="net-match" value="пул не пуст">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-net-empty" edge="1" parent="1" source="net-form" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#b85450;endArrow=classic;fontColor=#b85450;fontSize=10;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="net-empty" value="пул пуст">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="670" y="370" />
+              <mxPoint x="800" y="370" />
+              <mxPoint x="800" y="500" />
+              <mxPoint x="620" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-net-next" edge="1" parent="1" source="net-match" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;curved=1;strokeColor=#666666;endArrow=classic;fontSize=10;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" target="net-match" value="Следующий">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="760" y="415" />
+              <mxPoint x="760" y="445" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-donate-pay" edge="1" parent="1" source="donate-amount" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;endArrow=classic;fontSize=10;" target="donate-confirm" value="оплата YooKassa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-spk-detail" edge="1" parent="1" source="spk-list" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d79b00;endArrow=classic;fontColor=#d79b00;fontSize=10;" target="spk-detail" value="выбор вопроса">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-spk-page" edge="1" parent="1" source="spk-list" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;curved=1;strokeColor=#d79b00;endArrow=classic;fontColor=#d79b00;fontSize=10;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" target="spk-list" value="пагинация">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1240" y="175" />
+              <mxPoint x="1240" y="205" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

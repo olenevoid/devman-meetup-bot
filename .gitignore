@@ -51,6 +51,8 @@ htmlcov/
 .DS_Store
 Thumbs.db
 
-# Drawio backups
+# Drawio backups / temp files (.$name.bkp, .$name.dtmp)
 *.bkp
 .*.bkp
+*.dtmp
+.*.dtmp
