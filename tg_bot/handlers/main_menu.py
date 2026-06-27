@@ -9,6 +9,8 @@ from tg_bot.messaging import edit_current, replace_current
 
 async def start(update: Update, context: CallbackContext) -> State:
     tg_id = update.effective_user.id
+    username = update.effective_user.username or ""
+    await users.get_or_create_profile(tg_id, username)
     roles = await users.get_roles_for_telegram_id(tg_id)
     await replace_current(
         update,
