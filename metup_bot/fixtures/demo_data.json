@@ -1,0 +1,542 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "organizer",
+      "password": "pbkdf2_sha256$1000000$nnLeYyHh2Vnwu5bxX5PWf9$b17AukKjniYqQ8WHREnn95wEgFYWn/QgINQiDWhfIxo=",
+      "first_name": "Olya",
+      "last_name": "Organizer",
+      "email": "organizer@demo.local",
+      "is_staff": true,
+      "is_superuser": true,
+      "is_active": true,
+      "date_joined": "2026-06-01T09:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "alice",
+      "password": "pbkdf2_sha256$1000000$nnLeYyHh2Vnwu5bxX5PWf9$b17AukKjniYqQ8WHREnn95wEgFYWn/QgINQiDWhfIxo=",
+      "first_name": "Alice",
+      "last_name": "Aleksandrova",
+      "email": "alice@demo.local",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2026-06-02T10:30:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "username": "bob",
+      "password": "pbkdf2_sha256$1000000$nnLeYyHh2Vnwu5bxX5PWf9$b17AukKjniYqQ8WHREnn95wEgFYWn/QgINQiDWhfIxo=",
+      "first_name": "Bob",
+      "last_name": "Bobrov",
+      "email": "bob@demo.local",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2026-06-03T11:15:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "username": "carol",
+      "password": "pbkdf2_sha256$1000000$nnLeYyHh2Vnwu5bxX5PWf9$b17AukKjniYqQ8WHREnn95wEgFYWn/QgINQiDWhfIxo=",
+      "first_name": "Carol",
+      "last_name": "Karlova",
+      "email": "carol@demo.local",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2026-06-04T12:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "username": "dave",
+      "password": "pbkdf2_sha256$1000000$nnLeYyHh2Vnwu5bxX5PWf9$b17AukKjniYqQ8WHREnn95wEgFYWn/QgINQiDWhfIxo=",
+      "first_name": "Dave",
+      "last_name": "Davidov",
+      "email": "dave@demo.local",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2026-06-05T13:45:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+      "username": "eve",
+      "password": "pbkdf2_sha256$1000000$nnLeYyHh2Vnwu5bxX5PWf9$b17AukKjniYqQ8WHREnn95wEgFYWn/QgINQiDWhfIxo=",
+      "first_name": "Eve",
+      "last_name": "Egorova",
+      "email": "eve@demo.local",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2026-06-06T09:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 7,
+    "fields": {
+      "username": "frank",
+      "password": "pbkdf2_sha256$1000000$nnLeYyHh2Vnwu5bxX5PWf9$b17AukKjniYqQ8WHREnn95wEgFYWn/QgINQiDWhfIxo=",
+      "first_name": "Frank",
+      "last_name": "Frolov",
+      "email": "frank@demo.local",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2026-06-07T09:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 8,
+    "fields": {
+      "username": "grace",
+      "password": "pbkdf2_sha256$1000000$nnLeYyHh2Vnwu5bxX5PWf9$b17AukKjniYqQ8WHREnn95wEgFYWn/QgINQiDWhfIxo=",
+      "first_name": "Grace",
+      "last_name": "Gusarova",
+      "email": "grace@demo.local",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2026-06-08T09:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 9,
+    "fields": {
+      "username": "heidi",
+      "password": "pbkdf2_sha256$1000000$nnLeYyHh2Vnwu5bxX5PWf9$b17AukKjniYqQ8WHREnn95wEgFYWn/QgINQiDWhfIxo=",
+      "first_name": "Heidi",
+      "last_name": "Holmova",
+      "email": "heidi@demo.local",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2026-06-09T09:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 10,
+    "fields": {
+      "username": "ivan",
+      "password": "pbkdf2_sha256$1000000$nnLeYyHh2Vnwu5bxX5PWf9$b17AukKjniYqQ8WHREnn95wEgFYWn/QgINQiDWhfIxo=",
+      "first_name": "Ivan",
+      "last_name": "Ivanov",
+      "email": "ivan@demo.local",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2026-06-10T09:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 11,
+    "fields": {
+      "username": "judy",
+      "password": "pbkdf2_sha256$1000000$nnLeYyHh2Vnwu5bxX5PWf9$b17AukKjniYqQ8WHREnn95wEgFYWn/QgINQiDWhfIxo=",
+      "first_name": "Judy",
+      "last_name": "Yudina",
+      "email": "judy@demo.local",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2026-06-11T09:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 12,
+    "fields": {
+      "username": "admin",
+      "password": "pbkdf2_sha256$1000000$ViQA4NQTN2RlmMFcjVAl8U$jKcgO2ZSyXbc+JFn+e2VLIkECPC5ggfuACU8sB01b7E=",
+      "first_name": "Admin",
+      "last_name": "Adminov",
+      "email": "admin@demo.local",
+      "is_staff": true,
+      "is_superuser": true,
+      "is_active": true,
+      "date_joined": "2026-06-01T08:00:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.telegramprofile",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "telegram_id": 1000000001,
+      "telegram_username": "organizer"
+    }
+  },
+  {
+    "model": "metup_bot.telegramprofile",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "telegram_id": 1000000002,
+      "telegram_username": "alice_py"
+    }
+  },
+  {
+    "model": "metup_bot.telegramprofile",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "telegram_id": 1000000003,
+      "telegram_username": "bob_code"
+    }
+  },
+  {
+    "model": "metup_bot.telegramprofile",
+    "pk": 4,
+    "fields": {
+      "user": 4,
+      "telegram_id": 1000000004,
+      "telegram_username": "carol_g"
+    }
+  },
+  {
+    "model": "metup_bot.telegramprofile",
+    "pk": 5,
+    "fields": {
+      "user": 5,
+      "telegram_id": 1000000005,
+      "telegram_username": "dave_x"
+    }
+  },
+  {
+    "model": "metup_bot.telegramprofile",
+    "pk": 6,
+    "fields": {
+      "user": 6,
+      "telegram_id": 1000000006,
+      "telegram_username": "eve_dev"
+    }
+  },
+  {
+    "model": "metup_bot.telegramprofile",
+    "pk": 7,
+    "fields": {
+      "user": 7,
+      "telegram_id": 1000000007,
+      "telegram_username": "frank_t"
+    }
+  },
+  {
+    "model": "metup_bot.telegramprofile",
+    "pk": 8,
+    "fields": {
+      "user": 8,
+      "telegram_id": 1000000008,
+      "telegram_username": "grace_88"
+    }
+  },
+  {
+    "model": "metup_bot.telegramprofile",
+    "pk": 9,
+    "fields": {
+      "user": 9,
+      "telegram_id": 1000000009,
+      "telegram_username": "heidi_qa"
+    }
+  },
+  {
+    "model": "metup_bot.telegramprofile",
+    "pk": 10,
+    "fields": {
+      "user": 10,
+      "telegram_id": 1000000010,
+      "telegram_username": "ivan_codes"
+    }
+  },
+  {
+    "model": "metup_bot.telegramprofile",
+    "pk": 11,
+    "fields": {
+      "user": 11,
+      "telegram_id": 1000000011,
+      "telegram_username": "judy_py"
+    }
+  },
+  {
+    "model": "metup_bot.userrole",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "role": "organizer",
+      "assigned_at": "2026-06-01T09:05:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.userrole",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "role": "speaker",
+      "assigned_at": "2026-06-02T10:35:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.userrole",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "role": "speaker",
+      "assigned_at": "2026-06-03T11:20:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.userrole",
+    "pk": 4,
+    "fields": {
+      "user": 4,
+      "role": "guest",
+      "assigned_at": "2026-06-04T12:05:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.userrole",
+    "pk": 5,
+    "fields": {
+      "user": 5,
+      "role": "guest",
+      "assigned_at": "2026-06-05T13:50:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.userrole",
+    "pk": 6,
+    "fields": {
+      "user": 6,
+      "role": "speaker",
+      "assigned_at": "2026-06-06T09:05:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.userrole",
+    "pk": 7,
+    "fields": {
+      "user": 7,
+      "role": "guest",
+      "assigned_at": "2026-06-07T09:05:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.userrole",
+    "pk": 8,
+    "fields": {
+      "user": 8,
+      "role": "guest",
+      "assigned_at": "2026-06-08T09:05:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.userrole",
+    "pk": 9,
+    "fields": {
+      "user": 9,
+      "role": "guest",
+      "assigned_at": "2026-06-09T09:05:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.userrole",
+    "pk": 10,
+    "fields": {
+      "user": 10,
+      "role": "guest",
+      "assigned_at": "2026-06-10T09:05:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.userrole",
+    "pk": 11,
+    "fields": {
+      "user": 11,
+      "role": "guest",
+      "assigned_at": "2026-06-11T09:05:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.event",
+    "pk": 1,
+    "fields": {
+      "title": "Python Meetup #42",
+      "description": "Demo event for development and manual testing. Three talks, Q&A, and networking profiles.",
+      "starts_at": "2026-07-15T18:00:00Z",
+      "is_current": true,
+      "created_at": "2026-06-10T08:00:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.talk",
+    "pk": 1,
+    "fields": {
+      "event": 1,
+      "speaker": 2,
+      "title": "Асинхронный Python с нуля",
+      "description": "Событийный цикл, корутины и основы asyncio на живых примерах.",
+      "scheduled_start": "2026-07-15T18:30:00Z",
+      "scheduled_end": "2026-07-15T19:00:00Z",
+      "state": "active",
+      "order_index": 0,
+      "created_at": "2026-06-11T10:00:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.talk",
+    "pk": 2,
+    "fields": {
+      "event": 1,
+      "speaker": 3,
+      "title": "Внутренности Django: ORM",
+      "description": "Как запросы превращаются в SQL: QuerySet, ленивые вычисления, select_related против prefetch_related.",
+      "scheduled_start": "2026-07-15T19:10:00Z",
+      "scheduled_end": "2026-07-15T19:40:00Z",
+      "state": "planned",
+      "order_index": 1,
+      "created_at": "2026-06-11T10:05:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.talk",
+    "pk": 3,
+    "fields": {
+      "event": 1,
+      "speaker": 6,
+      "title": "Молния: type hints, которые окупаются",
+      "description": "Короткий рассказ о внедрении типизации в существующий код.",
+      "scheduled_start": "2026-07-15T19:45:00Z",
+      "scheduled_end": "2026-07-15T20:00:00Z",
+      "state": "planned",
+      "order_index": 2,
+      "created_at": "2026-06-12T09:00:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.question",
+    "pk": 1,
+    "fields": {
+      "talk": 1,
+      "author": 4,
+      "text": "Как событийный цикл справляется с блокирующими вызовами?",
+      "is_answered": false,
+      "created_at": "2026-07-15T18:35:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.question",
+    "pk": 2,
+    "fields": {
+      "talk": 1,
+      "author": 5,
+      "text": "Какую асинхронную HTTP-библиотеку посоветуете для нового проекта?",
+      "is_answered": true,
+      "created_at": "2026-07-15T18:45:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.question",
+    "pk": 3,
+    "fields": {
+      "talk": 2,
+      "author": 4,
+      "text": "Что именно происходит внутри select_related под капотом?",
+      "is_answered": false,
+      "created_at": "2026-07-15T19:15:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.question",
+    "pk": 4,
+    "fields": {
+      "talk": 3,
+      "author": 7,
+      "text": "Стоит ли начинать с mypy или сразу переходить на pyright?",
+      "is_answered": false,
+      "created_at": "2026-07-15T19:50:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.networkingprofile",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "bio": "Backend developer focused on async Python and FastAPI.",
+      "stack": "Python, FastAPI, asyncio, PostgreSQL",
+      "contact": "@alice_py",
+      "is_published": true,
+      "created_at": "2026-06-12T12:00:00Z",
+      "updated_at": "2026-06-20T15:00:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.networkingprofile",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "bio": "Django developer, occasional speaker, PostgreSQL enthusiast.",
+      "stack": "Python, Django, PostgreSQL, Docker",
+      "contact": "bob@demo.local",
+      "is_published": true,
+      "created_at": "2026-06-13T12:00:00Z",
+      "updated_at": "2026-06-21T10:00:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.networkingprofile",
+    "pk": 3,
+    "fields": {
+      "user": 4,
+      "bio": "Data engineer learning web dev on the side.",
+      "stack": "Python, pandas, Airflow",
+      "contact": "@carol_g",
+      "is_published": false,
+      "created_at": "2026-06-14T12:00:00Z",
+      "updated_at": "2026-06-14T12:00:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.donation",
+    "pk": 1,
+    "fields": {
+      "user": 4,
+      "amount_rub": 500,
+      "yookassa_payment_id": "demo-pay-000001",
+      "status": "succeeded",
+      "created_at": "2026-07-15T18:04:30Z",
+      "paid_at": "2026-07-15T18:05:00Z"
+    }
+  },
+  {
+    "model": "metup_bot.donation",
+    "pk": 2,
+    "fields": {
+      "user": 5,
+      "amount_rub": 100,
+      "yookassa_payment_id": "demo-pay-000002",
+      "status": "pending",
+      "created_at": "2026-07-15T18:50:00Z"
+    }
+  }
+]
