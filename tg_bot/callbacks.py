@@ -10,11 +10,29 @@ class Callback(StrEnum):
     HOME = auto()
     BACK = auto()
     MENU = auto()
+
     SHOW_PROGRAM = auto()
+    PROG_FULL = auto()
+    PROG_PAGE = auto()
+
     ASK_SPEAKER = auto()
+
     NETWORKING = auto()
+    NET_FILL_PROFILE = auto()
+    NET_NEXT = auto()
+    NET_REVEAL = auto()
+    NET_LEAVE = auto()
+
     DONATE = auto()
+    DON_PRESET = auto()
+    DON_CUSTOM = auto()
+
     SPEAKER_CABINET = auto()
+    SPK_START = auto()
+    SPK_END = auto()
+    SPK_LIST = auto()
+    SPK_QUESTION = auto()
+    SPK_ANSWER = auto()
 
 
 class CallbackData:

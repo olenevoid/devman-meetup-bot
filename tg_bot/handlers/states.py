@@ -3,9 +3,12 @@ from enum import Enum, auto
 
 class State(Enum):
     MAIN_MENU = auto()
-    ASK_INPUT_QUESTION = auto()
-    NET_INPUT_BIO = auto()
-    NET_INPUT_STACK = auto()
-    NET_INPUT_CONTACT = auto()
+    IN_ASK_SPEAKER = auto()
+    IN_NETWORKING = auto()
+    IN_DONATION = auto()
+    ASK_AWAIT_QUESTION = auto()
+    NET_FORM_BIO = auto()
+    NET_FORM_STACK = auto()
+    NET_FORM_CONTACT = auto()
     NET_MATCHING = auto()
-    DON_INPUT_AMOUNT = auto()
+    DON_AWAIT_AMOUNT = auto()
