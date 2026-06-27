@@ -1,4 +1,8 @@
-MAIN_MENU_TEXT = "PythonMeetup bot: это бот для организации встреч"
+MAIN_MENU_TEXT = (
+    "🐍 PythonMeetup\n\n"
+    "Привет! Помогу: программа, вопрос спикеру, "
+    "найти собеседника, поддержать донатом."
+)
 
 
 def stub_text(name: str) -> str:

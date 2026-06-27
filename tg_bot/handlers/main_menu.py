@@ -11,7 +11,7 @@ async def start(update: Update, context: CallbackContext) -> State:
         update,
         context,
         text=strings.MAIN_MENU_TEXT,
-        keyboard=None,
+        keyboard=keyboards.get_main_menu({"guest"}),
     )
     return State.MAIN_MENU
 
@@ -20,7 +20,7 @@ async def show_main_menu(update: Update, context: CallbackContext) -> State:
     await edit_current(
         update,
         text=strings.MAIN_MENU_TEXT,
-        keyboard=None,
+        keyboard=keyboards.get_main_menu({"guest"}),
     )
     return State.MAIN_MENU
 
