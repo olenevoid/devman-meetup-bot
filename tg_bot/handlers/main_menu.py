@@ -9,7 +9,7 @@ from tg_bot.messaging import edit_current, replace_current
 
 async def start(update: Update, context: CallbackContext) -> State:
     tg_id = update.effective_user.id
-    roles = users.get_roles_for_telegram_id(tg_id)
+    roles = await users.get_roles_for_telegram_id(tg_id)
     await replace_current(
         update,
         context,
@@ -21,7 +21,7 @@ async def start(update: Update, context: CallbackContext) -> State:
 
 async def show_main_menu(update: Update, context: CallbackContext) -> State:
     tg_id = update.effective_user.id
-    roles = users.get_roles_for_telegram_id(tg_id)
+    roles = await users.get_roles_for_telegram_id(tg_id)
     await edit_current(
         update,
         text=strings.main_menu_text(roles),
