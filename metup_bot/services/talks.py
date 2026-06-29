@@ -11,7 +11,11 @@ def get_current_event() -> Event | None:
 
 @sync_to_async
 def get_active_talk() -> Talk | None:
-    return Talk.objects.filter(state=Talk.State.ACTIVE).first()
+    return (
+        Talk.objects.filter(state=Talk.State.ACTIVE)
+        .select_related("speaker__telegram_profile")
+        .first()
+    )
 
 
 @sync_to_async
@@ -19,6 +23,7 @@ def get_next_talk() -> Talk | None:
     return (
         Talk.objects.filter(event__is_current=True, state=Talk.State.PLANNED)
         .order_by("order_index")
+        .select_related("speaker__telegram_profile")
         .first()
     )
 
@@ -27,8 +32,10 @@ def get_next_talk() -> Talk | None:
 def get_talks_paginated(
     page: int = 1, page_size: int = 5
 ) -> tuple[list[Talk], int]:
-    queryset = Talk.objects.filter(event__is_current=True).order_by(
-        "order_index"
+    queryset = (
+        Talk.objects.filter(event__is_current=True)
+        .order_by("order_index")
+        .select_related("speaker__telegram_profile")
     )
     paginator = Paginator(queryset, page_size)
     page_obj = paginator.get_page(page)
