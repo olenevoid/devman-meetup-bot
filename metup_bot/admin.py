@@ -24,7 +24,6 @@ class TelegramProfileInline(admin.StackedInline):
     model = TelegramProfile
     fk_name = "user"
     can_delete = False
-    verbose_name_plural = "Telegram profile"
     max_num = 1
     extra = 0
 
@@ -34,14 +33,14 @@ class UserRoleInline(admin.TabularInline):
     extra = 1
 
 
-@admin.display(description="Roles")
+@admin.display(description="Роли")
 def _roles_display(user):
     roles = [role.get_role_display() for role in user.roles.all()]
     return ", ".join(roles) if roles else "—"
 
 
 class RoleListFilter(admin.SimpleListFilter):
-    title = "role"
+    title = "роль"
     parameter_name = "role"
 
     def lookups(self, request, model_admin):
@@ -85,7 +84,7 @@ class TalkAdminForm(forms.ModelForm):
         old_state = None if is_new else self.instance.state
 
         if old_state == Talk.State.FINISHED:
-            raise ValidationError("A finished talk cannot change state.")
+            raise ValidationError("Завершённый доклад не может менять статус.")
 
         if new_state == Talk.State.ACTIVE:
             event = self.cleaned_data.get("event") or self.instance.event
@@ -93,7 +92,7 @@ class TalkAdminForm(forms.ModelForm):
             if not is_new:
                 qs = qs.exclude(pk=self.instance.pk)
             if qs.exists():
-                raise ValidationError("Another talk is already active.")
+                raise ValidationError("Другой доклад уже идёт.")
 
         return new_state
 
@@ -119,7 +118,7 @@ class EventAdmin(admin.ModelAdmin):
             .annotate(_talks_count=Count("talks"))
         )
 
-    @admin.display(description="Talks", ordering="_talks_count")
+    @admin.display(description="Доклады", ordering="_talks_count")
     def talks_count(self, obj):
         return obj._talks_count
 
@@ -155,7 +154,7 @@ class TalkAdmin(admin.ModelAdmin):
         except IntegrityError:
             self.message_user(
                 request,
-                "Only one talk can be active per event at a time.",
+                "В рамках события может идти только один доклад одновременно.",
                 messages.ERROR,
             )
             return HttpResponseRedirect(request.get_full_path())
@@ -200,7 +199,7 @@ class QuestionAdmin(admin.ModelAdmin):
     search_fields = ("text",)
     readonly_fields = ("talk", "author", "text", "created_at")
 
-    @admin.display(description="Text")
+    @admin.display(description="Текст")
     def truncated_text(self, obj):
         return Truncator(obj.text).chars(50)
 
