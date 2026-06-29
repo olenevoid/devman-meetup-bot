@@ -1,26 +1,43 @@
 # TODO — deferred
 
-Items explicitly deferred from the admin-rewrite branch
-(`metup_bot/admin.py` only — no model changes, no migrations).
+Items deferred from the DB-fixes round — the speaker cabinet UI.
+`tg_bot/` only (no model changes, no migrations).
 
-## Talk state — model-level choices
+## Speaker cabinet — start/end talk buttons
 
-`Talk.state` is a bare `CharField(max_length=20)`. The admin bridges this
-with a form-level `TALK_STATE_CHOICES` + `TalkAdminForm`
-(`metup_bot/admin.py`), and `services/talks.py` uses raw string literals
-(`"planned"`, `"active"`, `"finished"`).
+The speaker cabinet handler (`tg_bot/handlers/speaker_cabinet.py`) is
+stub-only: `enter`/`start_talk`/`end_talk` each call
+`main_menu.show_stub`. The data layer is already in place:
+`metup_bot/services/talks.py` exposes `get_speaker_talk`,
+`get_active_talk`, `start_talk`, `end_talk` (the latter two enforce the
+per-event "only one active talk" invariant), and callbacks
+`SPK_START`/`SPK_END` are already wired in
+`tg_bot/handlers/state_machines.py`. The UI is what's missing.
 
-In the "fix models" round:
+Behaviour to implement (see `docs/PythonMeetup.md`, speaker scenarios,
+plus the "one active talk per event" rule):
 
-1. Add `class State(models.TextChoices)` to `Talk`, wire it onto the
-   `state` field, generate + apply the migration.
-2. Refactor `services/talks.py` to use `Talk.State.*` instead of the
-   magic strings.
-3. In `metup_bot/admin.py`: drop `TALK_STATE_CHOICES` and the explicit
-   `ChoiceField` on `TalkAdminForm` (the model choices make the dropdown
-   automatic). Keep `clean_state()` — the transition invariants still
-   belong on the form.
-4. Wire `TalkInline` (in `EventAdmin`) to use the model form so `state`
-   renders as a dropdown and `clean_state()` invariants apply to inline
-   edits too. Currently the inline renders `state` as free text with no
-   validation, by deliberate deferral.
+1. Add `get_speaker_cabinet(...)` to `tg_bot/keyboards.py` — an
+   `InlineKeyboardMarkup` showing **Start** (`SPK_START`) when the talk
+   is `planned` and not blocked, **End** (`SPK_END`) when `active`, and
+   no action button when `finished`. Always include a Back/Menu button.
+   When another talk in the same event is already active, suppress Start
+   and surface a notice.
+2. Implement `enter`/`start_talk`/`end_talk` in
+   `tg_bot/handlers/speaker_cabinet.py`. Fetch the speaker's talk via
+   `talks.get_speaker_talk(tg_id)`, re-render the cabinet in place via
+   `edit_current`. Wrap `talks.start_talk`/`end_talk` in try/except
+   `ValueError` so "another talk is already active" shows a friendly
+   message instead of crashing.
+3. Add Russian strings to `tg_bot/strings.py` (cabinet text, the
+   active-conflict message, the finished message). Follow the existing
+   Russian wording.
+4. Leave `list_questions`/`show_question`/`mark_answered` as stubs —
+   out of scope for this round.
+
+Notes:
+
+- Everything stays within `State.MAIN_MENU`; no new state and no routing
+  changes (the callbacks are already registered).
+- The handler can use `Talk.State.*` directly — the model choices landed
+  in the DB-fixes round.
