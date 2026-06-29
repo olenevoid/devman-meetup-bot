@@ -1,6 +1,8 @@
+from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db.models import Count
 
 from metup_bot.models import (
@@ -100,9 +102,62 @@ class EventAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
+TALK_STATE_CHOICES = (
+    ("planned", "Planned"),
+    ("active", "Active"),
+    ("finished", "Finished"),
+)
+
+
+class TalkAdminForm(forms.ModelForm):
+    state = forms.ChoiceField(choices=TALK_STATE_CHOICES)
+
+    class Meta:
+        model = Talk
+        fields = "__all__"
+
+    def clean_state(self):
+        new_state = self.cleaned_data["state"]
+        is_new = self.instance.pk is None
+        old_state = None if is_new else self.instance.state
+
+        if old_state == "finished":
+            raise ValidationError(
+                "A finished talk cannot change state."
+            )
+
+        if new_state == "active":
+            qs = Talk.objects.filter(state="active")
+            if not is_new:
+                qs = qs.exclude(pk=self.instance.pk)
+            if qs.exists():
+                raise ValidationError(
+                    "Another talk is already active."
+                )
+
+        return new_state
+
+
+@admin.register(Talk)
+class TalkAdmin(admin.ModelAdmin):
+    form = TalkAdminForm
+    list_display = (
+        "title",
+        "event",
+        "speaker",
+        "state",
+        "scheduled_start",
+        "order_index",
+    )
+    list_filter = ("state", "event")
+    search_fields = ("title",)
+    autocomplete_fields = ("speaker", "event")
+    ordering = ("event", "order_index")
+    readonly_fields = ("created_at",)
+
+
 admin.site.register(Donation)
 admin.site.register(NetworkingProfile)
 admin.site.register(Question)
-admin.site.register(Talk)
 admin.site.register(TelegramProfile)
 admin.site.register(UserRole)
