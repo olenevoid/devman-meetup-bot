@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.contrib.auth.models import User
+from django.db.models import Count
 
 from metup_bot.models import (
     Donation,
@@ -67,8 +68,39 @@ class UserAdmin(DjangoUserAdmin):
         return super().get_queryset(request).prefetch_related("roles")
 
 
+class TalkInline(admin.TabularInline):
+    model = Talk
+    extra = 1
+    fields = ("speaker", "title", "scheduled_start", "state", "order_index")
+
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = ("title", "starts_at", "is_current", "talks_count")
+    readonly_fields = ("created_at",)
+    search_fields = ("title",)
+    inlines = (TalkInline,)
+
+    def get_queryset(self, request):
+        return (
+            super()
+            .get_queryset(request)
+            .annotate(_talks_count=Count("talks"))
+        )
+
+    @admin.display(description="Talks", ordering="_talks_count")
+    def talks_count(self, obj):
+        return obj._talks_count
+
+    def save_model(self, request, obj, form, change):
+        if obj.is_current:
+            Event.objects.filter(is_current=True).exclude(pk=obj.pk).update(
+                is_current=False,
+            )
+        super().save_model(request, obj, form, change)
+
+
 admin.site.register(Donation)
-admin.site.register(Event)
 admin.site.register(NetworkingProfile)
 admin.site.register(Question)
 admin.site.register(Talk)
