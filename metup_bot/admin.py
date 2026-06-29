@@ -1,9 +1,11 @@
 from django import forms
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 from django.db.models import Count
+from django.http import HttpResponseRedirect
 
 from django.utils.text import Truncator
 
@@ -72,8 +74,33 @@ class UserAdmin(DjangoUserAdmin):
         return super().get_queryset(request).prefetch_related("roles")
 
 
+class TalkAdminForm(forms.ModelForm):
+    class Meta:
+        model = Talk
+        fields = "__all__"
+
+    def clean_state(self):
+        new_state = self.cleaned_data["state"]
+        is_new = self.instance.pk is None
+        old_state = None if is_new else self.instance.state
+
+        if old_state == Talk.State.FINISHED:
+            raise ValidationError("A finished talk cannot change state.")
+
+        if new_state == Talk.State.ACTIVE:
+            event = self.cleaned_data.get("event") or self.instance.event
+            qs = Talk.objects.filter(state=Talk.State.ACTIVE, event=event)
+            if not is_new:
+                qs = qs.exclude(pk=self.instance.pk)
+            if qs.exists():
+                raise ValidationError("Another talk is already active.")
+
+        return new_state
+
+
 class TalkInline(admin.TabularInline):
     model = Talk
+    form = TalkAdminForm
     extra = 1
     fields = ("speaker", "title", "scheduled_start", "state", "order_index")
 
@@ -104,42 +131,6 @@ class EventAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
-TALK_STATE_CHOICES = (
-    ("planned", "Planned"),
-    ("active", "Active"),
-    ("finished", "Finished"),
-)
-
-
-class TalkAdminForm(forms.ModelForm):
-    state = forms.ChoiceField(choices=TALK_STATE_CHOICES)
-
-    class Meta:
-        model = Talk
-        fields = "__all__"
-
-    def clean_state(self):
-        new_state = self.cleaned_data["state"]
-        is_new = self.instance.pk is None
-        old_state = None if is_new else self.instance.state
-
-        if old_state == "finished":
-            raise ValidationError(
-                "A finished talk cannot change state."
-            )
-
-        if new_state == "active":
-            qs = Talk.objects.filter(state="active")
-            if not is_new:
-                qs = qs.exclude(pk=self.instance.pk)
-            if qs.exists():
-                raise ValidationError(
-                    "Another talk is already active."
-                )
-
-        return new_state
-
-
 @admin.register(Talk)
 class TalkAdmin(admin.ModelAdmin):
     form = TalkAdminForm
@@ -151,11 +142,23 @@ class TalkAdmin(admin.ModelAdmin):
         "scheduled_start",
         "order_index",
     )
+    list_editable = ("state",)
     list_filter = ("state", "event")
     search_fields = ("title",)
     autocomplete_fields = ("speaker", "event")
     ordering = ("event", "order_index")
     readonly_fields = ("created_at",)
+
+    def changelist_view(self, request, extra_context=None):
+        try:
+            return super().changelist_view(request, extra_context)
+        except IntegrityError:
+            self.message_user(
+                request,
+                "Only one talk can be active per event at a time.",
+                messages.ERROR,
+            )
+            return HttpResponseRedirect(request.get_full_path())
 
 
 @admin.register(Donation)

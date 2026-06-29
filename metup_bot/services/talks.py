@@ -11,13 +11,13 @@ def get_current_event() -> Event | None:
 
 @sync_to_async
 def get_active_talk() -> Talk | None:
-    return Talk.objects.filter(state="active").first()
+    return Talk.objects.filter(state=Talk.State.ACTIVE).first()
 
 
 @sync_to_async
 def get_next_talk() -> Talk | None:
     return (
-        Talk.objects.filter(event__is_current=True, state="planned")
+        Talk.objects.filter(event__is_current=True, state=Talk.State.PLANNED)
         .order_by("order_index")
         .first()
     )
@@ -45,19 +45,23 @@ def get_speaker_talk(tg_id: int) -> Talk | None:
 
 @sync_to_async
 def start_talk(talk: Talk) -> Talk:
-    if talk.state != "planned":
+    if talk.state != Talk.State.PLANNED:
         raise ValueError(f"Cannot start talk in state '{talk.state}'")
-    if Talk.objects.filter(state="active").exclude(pk=talk.pk).exists():
+    if (
+        Talk.objects.filter(state=Talk.State.ACTIVE, event=talk.event)
+        .exclude(pk=talk.pk)
+        .exists()
+    ):
         raise ValueError("Another talk is already active")
-    talk.state = "active"
+    talk.state = Talk.State.ACTIVE
     talk.save(update_fields=["state"])
     return talk
 
 
 @sync_to_async
 def end_talk(talk: Talk) -> Talk:
-    if talk.state != "active":
+    if talk.state != Talk.State.ACTIVE:
         raise ValueError(f"Cannot end talk in state '{talk.state}'")
-    talk.state = "finished"
+    talk.state = Talk.State.FINISHED
     talk.save(update_fields=["state"])
     return talk

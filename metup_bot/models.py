@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Q
 
 
 class TelegramProfile(models.Model):
@@ -48,11 +49,25 @@ class Event(models.Model):
     is_current = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["is_current"],
+                condition=Q(is_current=True),
+                name="single_current_event",
+            ),
+        ]
+
     def __str__(self):
         return self.title
 
 
 class Talk(models.Model):
+    class State(models.TextChoices):
+        PLANNED = "planned", "Planned"
+        ACTIVE = "active", "Active"
+        FINISHED = "finished", "Finished"
+
     event = models.ForeignKey(
         Event,
         on_delete=models.CASCADE,
@@ -67,9 +82,22 @@ class Talk(models.Model):
     description = models.TextField(blank=True)
     scheduled_start = models.DateTimeField(null=True, blank=True)
     scheduled_end = models.DateTimeField(null=True, blank=True)
-    state = models.CharField(max_length=20)
+    state = models.CharField(
+        max_length=20,
+        choices=State.choices,
+        default=State.PLANNED,
+    )
     order_index = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["event"],
+                condition=Q(state="active"),
+                name="single_active_talk_per_event",
+            ),
+        ]
 
     def __str__(self):
         return self.title
