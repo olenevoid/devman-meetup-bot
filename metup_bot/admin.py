@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db.models import Count
 
+from django.utils.text import Truncator
+
 from metup_bot.models import (
     Donation,
     Event,
@@ -176,6 +178,25 @@ class DonationAdmin(admin.ModelAdmin):
 
 
 admin.site.register(NetworkingProfile)
-admin.site.register(Question)
+
+
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = (
+        "truncated_text",
+        "talk",
+        "author",
+        "is_answered",
+        "created_at",
+    )
+    list_filter = ("talk", "is_answered")
+    search_fields = ("text",)
+    readonly_fields = ("talk", "author", "text", "created_at")
+
+    @admin.display(description="Text")
+    def truncated_text(self, obj):
+        return Truncator(obj.text).chars(50)
+
+
 admin.site.register(TelegramProfile)
 admin.site.register(UserRole)
