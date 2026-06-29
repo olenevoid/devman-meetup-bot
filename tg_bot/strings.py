@@ -55,6 +55,17 @@ def _talk_meta(talk) -> str:
     return " · ".join(part for part in (handle, time_range) if part)
 
 
+_TALK_STATE_EMOJI = {
+    "active": "🔴",
+    "finished": "✅",
+    "planned": "🟢",
+}
+
+
+def _talk_status_emoji(talk) -> str:
+    return _TALK_STATE_EMOJI.get(talk.state, "🟢")
+
+
 def _program_talk_block(marker: str, talk) -> str:
     title_line = f"{marker}: «{_safe(talk.title)}»"
     meta = _talk_meta(talk)
@@ -86,5 +97,6 @@ def full_program_text(page: int, num_pages: int, talks: list) -> str:
         handle = _speaker_handle(talk)
         start = _format_time(talk.scheduled_start)
         suffix = f" {start}" if start else ""
-        lines.append(f"«{_safe(talk.title)}» — {handle}{suffix}")
+        emoji = _talk_status_emoji(talk)
+        lines.append(f"{emoji} «{_safe(talk.title)}» — {handle}{suffix}")
     return "\n".join(lines)
