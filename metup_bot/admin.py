@@ -177,7 +177,11 @@ class DonationAdmin(admin.ModelAdmin):
         return False
 
 
-admin.site.register(NetworkingProfile)
+@admin.register(NetworkingProfile)
+class NetworkingProfileAdmin(admin.ModelAdmin):
+    list_display = ("user", "stack", "is_published", "updated_at")
+    list_filter = ("is_published",)
+    search_fields = ("bio", "stack", "contact")
 
 
 @admin.register(Question)
