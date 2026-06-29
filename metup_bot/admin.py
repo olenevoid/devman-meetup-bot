@@ -156,7 +156,25 @@ class TalkAdmin(admin.ModelAdmin):
     readonly_fields = ("created_at",)
 
 
-admin.site.register(Donation)
+@admin.register(Donation)
+class DonationAdmin(admin.ModelAdmin):
+    list_display = ("user", "amount_rub", "status", "created_at", "paid_at")
+    list_filter = ("status",)
+    date_hierarchy = "paid_at"
+
+    def get_readonly_fields(self, request, obj=None):
+        return [f.name for f in self.model._meta.fields]
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
 admin.site.register(NetworkingProfile)
 admin.site.register(Question)
 admin.site.register(TelegramProfile)
