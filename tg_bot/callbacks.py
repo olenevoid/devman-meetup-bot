@@ -27,6 +27,7 @@ class Callback(StrEnum):
     DONATE = auto()
     DON_PRESET = auto()
     DON_CUSTOM = auto()
+    DON_CHECK = auto()
 
     SPEAKER_CABINET = auto()
     SPK_START = auto()

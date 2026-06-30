@@ -144,6 +144,10 @@ def get_root_conversation_handler() -> ConversationHandler:
                     donation.enter, get_pattern(Callback.DONATE)
                 ),
                 CallbackQueryHandler(
+                    donation.check_payment,
+                    get_pattern(Callback.DON_CHECK),
+                ),
+                CallbackQueryHandler(
                     speaker_cabinet.enter,
                     get_pattern(Callback.SPEAKER_CABINET),
                 ),
