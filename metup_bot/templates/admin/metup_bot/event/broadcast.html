@@ -1,0 +1,27 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block content %}
+<div id="content-main">
+  <h1>Рассылка участникам: {{ event.title }}</h1>
+  <form method="post">
+    {% csrf_token %}
+    <fieldset class="module aligned">
+      <div class="form-row">
+        {{ form.text.errors }}
+        <label for="{{ form.text.id_for_label }}">{{ form.text.label }}</label>
+        {{ form.text }}
+      </div>
+      <div class="form-row">
+        {{ form.role.errors }}
+        <label for="{{ form.role.id_for_label }}">{{ form.role.label }}</label>
+        {{ form.role }}
+      </div>
+    </fieldset>
+    <div class="submit-row">
+      <input type="submit" value="Отправить" class="default">
+      <a href="{% url 'admin:metup_bot_event_change' event.pk %}" class="button cancel-link">Отмена</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

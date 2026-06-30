@@ -1,3 +1,6 @@
+import logging
+
+from asgiref.sync import async_to_sync
 from django import forms
 from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
@@ -5,9 +8,12 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.db.models import Count
-from django.http import HttpResponseRedirect
-
+from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import path, reverse
 from django.utils.text import Truncator
+from telegram import Bot
+from telegram.request import HTTPXRequest
 
 from metup_bot.models import (
     Donation,
@@ -18,6 +24,45 @@ from metup_bot.models import (
     TelegramProfile,
     UserRole,
 )
+from tg_bot.settings import BOT_PROXY, TG_BOT_TOKEN
+
+logger = logging.getLogger(__name__)
+
+
+def send_telegram_broadcast(chat_ids, text):
+    if BOT_PROXY:
+        bot = Bot(
+            token=TG_BOT_TOKEN,
+            request=HTTPXRequest(proxy=BOT_PROXY),
+        )
+    else:
+        bot = Bot(token=TG_BOT_TOKEN)
+
+    async def _send():
+        sent = 0
+        failed = 0
+        for chat_id in chat_ids:
+            try:
+                await bot.send_message(chat_id=chat_id, text=text)
+                sent += 1
+            except Exception:
+                logger.exception("Broadcast failed for chat_id %s", chat_id)
+                failed += 1
+        return sent, failed
+
+    return async_to_sync(_send)()
+
+
+class BroadcastForm(forms.Form):
+    text = forms.CharField(
+        widget=forms.Textarea(attrs={"rows": 5, "cols": 60}),
+        label="Сообщение",
+    )
+    role = forms.ChoiceField(
+        choices=[("", "Все")] + list(UserRole.Role.choices),
+        required=False,
+        label="Роль получателей",
+    )
 
 
 class TelegramProfileInline(admin.StackedInline):
@@ -110,12 +155,64 @@ class EventAdmin(admin.ModelAdmin):
     readonly_fields = ("created_at",)
     search_fields = ("title",)
     inlines = (TalkInline,)
+    change_form_template = "admin/metup_bot/event/change_form.html"
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                "<path:object_id>/broadcast/",
+                self.admin_site.admin_view(self.broadcast_view),
+                name="metup_bot_event_broadcast",
+            ),
+        ]
+        return custom_urls + urls
+
+    def broadcast_view(self, request, object_id):
+        event = self.get_object(request, object_id)
+        if event is None:
+            raise Http404("Event not found.")
+
+        if request.method == "POST":
+            form = BroadcastForm(request.POST)
+            if form.is_valid():
+                text = form.cleaned_data["text"]
+                role = form.cleaned_data["role"]
+                profiles = TelegramProfile.objects.select_related("user").all()
+                if role:
+                    profiles = profiles.filter(user__roles__role=role)
+
+                chat_ids = list(profiles.values_list("telegram_id", flat=True))
+                sent, failed = send_telegram_broadcast(chat_ids, text)
+                level = messages.SUCCESS if failed == 0 else messages.WARNING
+                self.message_user(
+                    request,
+                    f"Отправлено: {sent}, не удалось: {failed}.",
+                    level,
+                )
+                return HttpResponseRedirect(
+                    reverse(
+                        "admin:metup_bot_event_change",
+                        args=[object_id],
+                    )
+                )
+        else:
+            form = BroadcastForm()
+
+        context = {
+            **self.admin_site.each_context(request),
+            "title": f"Рассылка: {event.title}",
+            "subtitle": None,
+            "event": event,
+            "form": form,
+            "opts": self.model._meta,
+            "is_popup": False,
+        }
+        return render(request, "admin/metup_bot/event/broadcast.html", context)
 
     def get_queryset(self, request):
         return (
-            super()
-            .get_queryset(request)
-            .annotate(_talks_count=Count("talks"))
+            super().get_queryset(request).annotate(_talks_count=Count("talks"))
         )
 
     @admin.display(description="Доклады", ordering="_talks_count")

@@ -1,0 +1,9 @@
+{% extends "admin/change_form.html" %}
+{% load admin_urls %}
+
+{% block object-tools-items %}
+  {{ block.super }}
+  <li>
+    <a href="{% url 'admin:metup_bot_event_broadcast' original.pk|admin_urlquote %}" class="historylink">Отправить уведомление</a>
+  </li>
+{% endblock %}
