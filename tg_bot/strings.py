@@ -273,3 +273,29 @@ def donation_canceled_text() -> str:
 
 def donation_error_text() -> str:
     return "😔 Не удалось создать платёж. Попробуй позже."
+
+
+def future_events_title_text() -> str:
+    return "📋 Будущие мероприятия"
+
+
+def future_no_events_text() -> str:
+    return "😔 Нет будущих мероприятий."
+
+
+def future_events_list_text() -> str:
+    return "Выбери мероприятие, чтобы записаться:"
+
+
+def future_event_sign_text(event_title: str) -> str:
+    return f"📌 {event_title}\n\nЗапишись на мероприятие:"
+
+
+def signed_as_text(role: str, event_title: str) -> str:
+    label = ROLE_LABELS.get(role, role)
+    return f"✅ Ты записан как {label} на «{event_title}»."
+
+
+def already_signed_text(role: str, event_title: str) -> str:
+    label = ROLE_LABELS.get(role, role)
+    return f"ℹ️ Ты уже записан как {label} на «{event_title}»."

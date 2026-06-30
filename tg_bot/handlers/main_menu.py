@@ -1,7 +1,7 @@
 from telegram import Update
 from telegram.ext import CallbackContext
 
-from metup_bot.services import questions, users
+from metup_bot.services import events, questions, users
 from tg_bot import keyboards, strings
 from tg_bot.handlers.states import State
 from tg_bot.messaging import edit_current, replace_current
@@ -19,11 +19,12 @@ async def start(update: Update, context: CallbackContext) -> State:
     await users.get_or_create_profile(tg_id, username)
     roles = await users.get_roles_for_telegram_id(tg_id)
     unanswered = await _unanswered_for(roles, tg_id)
+    future_count = await events.get_future_events_count()
     await replace_current(
         update,
         context,
         text=strings.main_menu_text(roles),
-        keyboard=keyboards.get_main_menu(roles, unanswered),
+        keyboard=keyboards.get_main_menu(roles, unanswered, future_count),
     )
     return State.MAIN_MENU
 
@@ -32,10 +33,11 @@ async def show_main_menu(update: Update, context: CallbackContext) -> State:
     tg_id = update.effective_user.id
     roles = await users.get_roles_for_telegram_id(tg_id)
     unanswered = await _unanswered_for(roles, tg_id)
+    future_count = await events.get_future_events_count()
     await edit_current(
         update,
         text=strings.main_menu_text(roles),
-        keyboard=keyboards.get_main_menu(roles, unanswered),
+        keyboard=keyboards.get_main_menu(roles, unanswered, future_count),
     )
     return State.MAIN_MENU
 

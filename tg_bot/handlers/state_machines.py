@@ -10,6 +10,7 @@ from tg_bot.callbacks import Callback, get_pattern
 from tg_bot.handlers import (
     ask_speaker,
     donation,
+    future_events,
     main_menu,
     networking,
     program,
@@ -170,6 +171,22 @@ def get_root_conversation_handler() -> ConversationHandler:
                 CallbackQueryHandler(
                     speaker_cabinet.mark_answered,
                     get_pattern(Callback.SPK_ANSWER),
+                ),
+                CallbackQueryHandler(
+                    future_events.enter,
+                    get_pattern(Callback.FUTURE_EVENTS),
+                ),
+                CallbackQueryHandler(
+                    future_events.show_event,
+                    get_pattern(Callback.FUTURE_EVENT),
+                ),
+                CallbackQueryHandler(
+                    future_events.sign_guest,
+                    get_pattern(Callback.FUTURE_SIGN_GUEST),
+                ),
+                CallbackQueryHandler(
+                    future_events.sign_speaker,
+                    get_pattern(Callback.FUTURE_SIGN_SPEAKER),
                 ),
                 CallbackQueryHandler(
                     main_menu.show_main_menu,
