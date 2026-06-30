@@ -232,3 +232,44 @@ def networking_card_text(profile) -> str:
         lines.append(f"«{_safe(bio)}»")
     lines += ["", f"Контакт: {_safe(profile.contact)}"]
     return "\n".join(lines)
+
+
+def donation_text() -> str:
+    return "💰 Поддержать митап\n\n" "Помоги покрыть пиццу и зал."
+
+
+def donation_custom_prompt_text() -> str:
+    return "Введи сумму в рублях (например, 250)."
+
+
+def donation_invalid_amount_text() -> str:
+    return (
+        "❌ Сумма должна быть целым числом от 10 до 1 000 000 ₽. "
+        "Попробуй ещё раз."
+    )
+
+
+def donation_payment_text(amount: int) -> str:
+    return (
+        f"Перейди по ссылке и оплати {amount} ₽.\n"
+        "После оплаты нажми «Я оплатил»."
+    )
+
+
+def donation_thanks_text(amount: int) -> str:
+    return f"💚 Спасибо! {amount} ₽ получены."
+
+
+def donation_not_paid_text() -> str:
+    return (
+        "⏳ Платёж ещё не поступил. "
+        "Если ты уже оплатил, подожди минуту и нажми «Я оплатил» ещё раз."
+    )
+
+
+def donation_canceled_text() -> str:
+    return "❌ Платёж отменён. Если что-то пошло не так, попробуй снова."
+
+
+def donation_error_text() -> str:
+    return "😔 Не удалось создать платёж. Попробуй позже."

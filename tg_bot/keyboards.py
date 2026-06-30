@@ -1,6 +1,6 @@
 from html import escape
 
-from telegram import InlineKeyboardMarkup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 from tg_bot.callbacks import Callback, CallbackButton
 
@@ -207,3 +207,37 @@ def get_networking_card_menu() -> InlineKeyboardMarkup:
 
 def get_networking_favorites_menu() -> InlineKeyboardMarkup:
     return menu_only()
+
+
+def get_donation_menu() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        [
+            [
+                CallbackButton("100 ₽", Callback.DON_PRESET, amount=100),
+                CallbackButton("300 ₽", Callback.DON_PRESET, amount=300),
+                CallbackButton("500 ₽", Callback.DON_PRESET, amount=500),
+            ],
+            [CallbackButton("✍️ Другая сумма", Callback.DON_CUSTOM)],
+            [CallbackButton("Меню", Callback.MENU)],
+        ]
+    )
+
+
+def get_donation_payment_menu(
+    amount: int, confirmation_url: str, donation_id: int
+) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    f"💳 Оплатить {amount} ₽", url=confirmation_url
+                )
+            ],
+            [
+                CallbackButton(
+                    "✅ Я оплатил", Callback.DON_CHECK, id=donation_id
+                )
+            ],
+            [CallbackButton("Меню", Callback.MENU)],
+        ]
+    )

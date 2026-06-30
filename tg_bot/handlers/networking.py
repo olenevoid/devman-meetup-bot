@@ -43,9 +43,7 @@ async def _show_card(
     )
 
 
-async def _browse_or_finish(
-    update: Update, context: CallbackContext
-) -> State:
+async def _browse_or_finish(update: Update, context: CallbackContext) -> State:
     viewer_id = update.effective_user.id
     exclude = _skipped(context) + _favorites(context)
     profile = await net.get_random_unviewed_profile(
@@ -88,9 +86,7 @@ async def enter(update: Update, context: CallbackContext) -> State:
         await edit_current(
             update,
             text=strings.networking_no_profiles_text(),
-            keyboard=keyboards.get_networking_intro_menu(
-                fav_count=fav_count
-            ),
+            keyboard=keyboards.get_networking_intro_menu(fav_count=fav_count),
         )
     return State.IN_NETWORKING
 
@@ -153,9 +149,7 @@ async def favorite(update: Update, context: CallbackContext) -> State:
     return await _browse_or_finish(update, context)
 
 
-async def show_favorites(
-    update: Update, context: CallbackContext
-) -> State:
+async def show_favorites(update: Update, context: CallbackContext) -> State:
     favorite_ids = _favorites(context)
     profiles = await net.get_profiles_by_ids(favorite_ids)
     await _render(
