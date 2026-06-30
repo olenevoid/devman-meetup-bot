@@ -34,10 +34,14 @@ def _format_time(value) -> str:
 
 
 def _speaker_handle(talk) -> str:
-    profile = getattr(talk.speaker, "telegram_profile", None)
+    return _user_handle(talk.speaker)
+
+
+def _user_handle(user) -> str:
+    profile = getattr(user, "telegram_profile", None)
     username = profile.telegram_username if profile else ""
     if not username:
-        username = talk.speaker.username
+        username = user.username
     return f"@{_safe(username)}"
 
 
@@ -89,6 +93,52 @@ def question_sent(active_talk) -> str:
         f"✅ Вопрос отправлен {handle}.\n"
         "Он увидит его в разделе «Мои вопросы»."
     )
+
+
+def speaker_cabinet_text(
+    talk, active_talk, total: int, unanswered: int
+) -> str:
+    if talk is None:
+        return (
+            "🎤 Кабинет спикера\n\n"
+            "У вас нет доклада на текущем мероприятии."
+        )
+    title = _safe(talk.title)
+    state = talk.state
+    if state == "active":
+        header = f"🎤 «{title}» ● идёт"
+    elif state == "finished":
+        header = f"🎤 «{title}» ✓ завершён"
+    else:
+        header = f"🎤 Мой доклад: «{title}»"
+    lines = [header]
+    if state == "planned":
+        if active_talk is not None and active_talk.pk != talk.pk:
+            lines.append(
+                f"Сейчас выступает " f"{_user_handle(active_talk.speaker)}."
+            )
+            lines.append("Начать можно после завершения.")
+        else:
+            lines.append("Статус: запланирован")
+            lines.append("Вопросов пока нет — начни доклад")
+    else:
+        lines.append(f"Вопросов: {total}\nНеотвечено: {unanswered}")
+    return "\n".join(lines)
+
+
+def questions_list_text(talk, page: int, num_pages: int) -> str:
+    title = _safe(talk.title)
+    header = f"✉️ Вопросы к докладу «{title}»"
+    if num_pages > 1:
+        header += f" · стр. {page}/{num_pages}"
+    return header
+
+
+def question_detail_text(question) -> str:
+    marker = "✅" if question.is_answered else "✉️"
+    handle = _user_handle(question.author)
+    time = _format_time(question.created_at)
+    return f"{marker} от {handle} · {time}\n\n{_safe(question.text)}"
 
 
 def _program_talk_block(marker: str, talk) -> str:
