@@ -22,15 +22,14 @@ from tg_bot.handlers.states import State
 def get_ask_speaker_conversation() -> ConversationHandler:
     return ConversationHandler(
         entry_points=[
-            MessageHandler(filters.TEXT, ask_speaker.receive_question),
+            MessageHandler(
+                filters.TEXT & ~filters.COMMAND,
+                ask_speaker.receive_question,
+            ),
         ],
         states={},
         map_to_parent={State.MAIN_MENU: State.MAIN_MENU},
-        fallbacks=[
-            CallbackQueryHandler(
-                main_menu.show_main_menu, get_pattern(Callback.MENU)
-            ),
-        ],
+        fallbacks=[],
         per_message=False,
         per_chat=True,
         per_user=True,
@@ -51,13 +50,22 @@ def get_networking_conversation() -> ConversationHandler:
         ],
         states={
             State.NET_FORM_BIO: [
-                MessageHandler(filters.TEXT, networking.receive_bio),
+                MessageHandler(
+                    filters.TEXT & ~filters.COMMAND,
+                    networking.receive_bio,
+                ),
             ],
             State.NET_FORM_STACK: [
-                MessageHandler(filters.TEXT, networking.receive_stack),
+                MessageHandler(
+                    filters.TEXT & ~filters.COMMAND,
+                    networking.receive_stack,
+                ),
             ],
             State.NET_FORM_CONTACT: [
-                MessageHandler(filters.TEXT, networking.receive_contact),
+                MessageHandler(
+                    filters.TEXT & ~filters.COMMAND,
+                    networking.receive_contact,
+                ),
             ],
             State.NET_MATCHING: [
                 CallbackQueryHandler(
@@ -105,7 +113,10 @@ def get_donation_conversation() -> ConversationHandler:
         ],
         states={
             State.DON_AWAIT_AMOUNT: [
-                MessageHandler(filters.TEXT, donation.receive_custom_amount),
+                MessageHandler(
+                    filters.TEXT & ~filters.COMMAND,
+                    donation.receive_custom_amount,
+                ),
             ],
         },
         map_to_parent={State.MAIN_MENU: State.MAIN_MENU},
@@ -196,13 +207,28 @@ def get_root_conversation_handler() -> ConversationHandler:
                     main_menu.show_main_menu,
                     get_pattern(Callback.HOME),
                 ),
+            ],
+            State.IN_ASK_SPEAKER: [
+                CallbackQueryHandler(
+                    main_menu.show_main_menu,
+                    get_pattern(Callback.MENU),
+                ),
                 get_ask_speaker_conversation(),
+            ],
+            State.IN_NETWORKING: [
+                CallbackQueryHandler(
+                    main_menu.show_main_menu,
+                    get_pattern(Callback.MENU),
+                ),
                 get_networking_conversation(),
+            ],
+            State.IN_DONATION: [
+                CallbackQueryHandler(
+                    main_menu.show_main_menu,
+                    get_pattern(Callback.MENU),
+                ),
                 get_donation_conversation(),
             ],
-            State.IN_ASK_SPEAKER: [get_ask_speaker_conversation()],
-            State.IN_NETWORKING: [get_networking_conversation()],
-            State.IN_DONATION: [get_donation_conversation()],
         },
         fallbacks=[CommandHandler("start", main_menu.start)],
         per_message=False,
