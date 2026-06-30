@@ -1,10 +1,16 @@
 from telegram import Update
 from telegram.ext import CallbackContext
 
-from metup_bot.services import users
+from metup_bot.services import questions, users
 from tg_bot import keyboards, strings
 from tg_bot.handlers.states import State
 from tg_bot.messaging import edit_current, replace_current
+
+
+async def _unanswered_for(roles: set[str], tg_id: int) -> int:
+    if "speaker" not in roles:
+        return 0
+    return await questions.unanswered_count_for_user(tg_id)
 
 
 async def start(update: Update, context: CallbackContext) -> State:
@@ -12,11 +18,12 @@ async def start(update: Update, context: CallbackContext) -> State:
     username = update.effective_user.username or ""
     await users.get_or_create_profile(tg_id, username)
     roles = await users.get_roles_for_telegram_id(tg_id)
+    unanswered = await _unanswered_for(roles, tg_id)
     await replace_current(
         update,
         context,
         text=strings.main_menu_text(roles),
-        keyboard=keyboards.get_main_menu(roles),
+        keyboard=keyboards.get_main_menu(roles, unanswered),
     )
     return State.MAIN_MENU
 
@@ -24,10 +31,11 @@ async def start(update: Update, context: CallbackContext) -> State:
 async def show_main_menu(update: Update, context: CallbackContext) -> State:
     tg_id = update.effective_user.id
     roles = await users.get_roles_for_telegram_id(tg_id)
+    unanswered = await _unanswered_for(roles, tg_id)
     await edit_current(
         update,
         text=strings.main_menu_text(roles),
-        keyboard=keyboards.get_main_menu(roles),
+        keyboard=keyboards.get_main_menu(roles, unanswered),
     )
     return State.MAIN_MENU
 

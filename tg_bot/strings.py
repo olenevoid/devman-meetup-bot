@@ -66,6 +66,31 @@ def _talk_status_emoji(talk) -> str:
     return _TALK_STATE_EMOJI.get(talk.state, "🟢")
 
 
+def ask_prompt(active_talk) -> str:
+    handle = _speaker_handle(active_talk)
+    title = _safe(active_talk.title)
+    return (
+        f"❓ Активный спикер: {handle}\n"
+        f"Доклад: «{title}»\n\n"
+        "Напиши вопрос одним сообщением."
+    )
+
+
+def no_active_speaker() -> str:
+    return (
+        "❌ Сейчас никто не выступает.\n"
+        "Попробуй, когда начнётся следующий доклад."
+    )
+
+
+def question_sent(active_talk) -> str:
+    handle = _speaker_handle(active_talk)
+    return (
+        f"✅ Вопрос отправлен {handle}.\n"
+        "Он увидит его в разделе «Мои вопросы»."
+    )
+
+
 def _program_talk_block(marker: str, talk) -> str:
     title_line = f"{marker}: «{_safe(talk.title)}»"
     meta = _talk_meta(talk)
