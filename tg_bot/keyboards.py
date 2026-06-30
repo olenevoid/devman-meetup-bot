@@ -171,3 +171,39 @@ def get_question_detail_menu(question) -> InlineKeyboardMarkup:
         ]
     )
     return InlineKeyboardMarkup(rows)
+
+
+def get_networking_intro_menu(
+    button_label: str | None = None,
+    fav_count: int = 0,
+) -> InlineKeyboardMarkup:
+    rows = []
+    if button_label:
+        rows.append([CallbackButton(button_label, Callback.NET_FILL_PROFILE)])
+    if fav_count:
+        rows.append(
+            [
+                CallbackButton(
+                    f"⭐ Избранное ({fav_count})",
+                    Callback.NET_FAVORITES,
+                )
+            ]
+        )
+    rows.append([CallbackButton("Меню", Callback.MENU)])
+    return InlineKeyboardMarkup(rows)
+
+
+def get_networking_card_menu() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        [
+            [
+                CallbackButton("⭐ В избранное", Callback.NET_FAVORITE),
+                CallbackButton("⏭ Пропустить", Callback.NET_NEXT),
+            ],
+            [CallbackButton("Меню", Callback.MENU)],
+        ]
+    )
+
+
+def get_networking_favorites_menu() -> InlineKeyboardMarkup:
+    return menu_only()

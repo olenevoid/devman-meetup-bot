@@ -20,7 +20,8 @@ class Callback(StrEnum):
     NETWORKING = auto()
     NET_FILL_PROFILE = auto()
     NET_NEXT = auto()
-    NET_REVEAL = auto()
+    NET_FAVORITE = auto()
+    NET_FAVORITES = auto()
     NET_LEAVE = auto()
 
     DONATE = auto()

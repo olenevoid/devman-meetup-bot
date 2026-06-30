@@ -43,6 +43,10 @@ def get_networking_conversation() -> ConversationHandler:
                 networking.show_bio_form,
                 get_pattern(Callback.NET_FILL_PROFILE),
             ),
+            CallbackQueryHandler(
+                networking.show_favorites,
+                get_pattern(Callback.NET_FAVORITES),
+            ),
         ],
         states={
             State.NET_FORM_BIO: [
@@ -56,16 +60,22 @@ def get_networking_conversation() -> ConversationHandler:
             ],
             State.NET_MATCHING: [
                 CallbackQueryHandler(
-                    networking.next_match,
+                    networking.skip,
                     get_pattern(Callback.NET_NEXT),
                 ),
                 CallbackQueryHandler(
-                    networking.reveal_contact,
-                    get_pattern(Callback.NET_REVEAL),
+                    networking.favorite,
+                    get_pattern(Callback.NET_FAVORITE),
                 ),
                 CallbackQueryHandler(
                     main_menu.show_main_menu,
                     get_pattern(Callback.NET_LEAVE),
+                ),
+            ],
+            State.NET_FAVORITES: [
+                CallbackQueryHandler(
+                    main_menu.show_main_menu,
+                    get_pattern(Callback.MENU),
                 ),
             ],
         },

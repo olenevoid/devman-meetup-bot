@@ -3,6 +3,26 @@
 Items deferred from the DB-fixes round — the speaker cabinet UI.
 `tg_bot/` only (no model changes, no migrations).
 
+## Networking — persist favorites & viewed profiles
+
+The networking flow (`tg_bot/handlers/networking.py`) currently stores
+**favorites** and **skipped/viewed** profile ids in `context.user_data`
+(keys `net_favorites`, `net_skipped`). This is session-only, in-memory
+state: it is lost on bot restart and not shared across devices.
+
+To make networking durable, add models + migrations:
+
+1. A `NetworkingFavorite` model (viewer → profile, unique together) so a
+   user's favorites survive restarts and can be listed back to them.
+2. A `NetworkingView` (or `NetworkingSkip`) model to remember which
+   profiles a viewer has already seen, so the feed does not replay the
+   same cards on every visit.
+3. A "favorites" screen — today favoriting only increments a counter on
+   the card button (`⭐ В избранное (N)`); the favorited contacts are not
+   retrievable until a list screen exists.
+4. Move the `net_*` `context.user_data` logic in `networking.py` behind
+   `metup_bot/services/networking.py` calls once the models land.
+
 ## Speaker cabinet — start/end talk buttons
 
 The speaker cabinet handler (`tg_bot/handlers/speaker_cabinet.py`) is

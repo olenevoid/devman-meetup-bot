@@ -175,3 +175,60 @@ def full_program_text(page: int, num_pages: int, talks: list) -> str:
         emoji = _talk_status_emoji(talk)
         lines.append(f"{emoji} «{_safe(talk.title)}» — {handle}{suffix}")
     return "\n".join(lines)
+
+
+def _profile_name(profile) -> str:
+    name = (profile.user.first_name or "").strip()
+    return _safe(name) if name else _user_handle(profile.user)
+
+
+def networking_intro_text() -> str:
+    return (
+        "🤝 Нетворкинг\n\n"
+        "Заполни анкету — бот покажет анкеты других гостей."
+    )
+
+
+def networking_no_profiles_text() -> str:
+    return "🤝 Пока нет других анкет. Загляни позже."
+
+
+def networking_all_viewed_text() -> str:
+    return "🤝 Ты посмотрел все анкеты."
+
+
+def networking_favorites_text(profiles: list) -> str:
+    if not profiles:
+        return "⭐ У тебя пока нет избранных анкет."
+    lines = ["⭐ Избранное", ""]
+    for profile in profiles:
+        name = _profile_name(profile)
+        contact = _safe(profile.contact or "")
+        if contact:
+            lines.append(f"👤 {name} · {contact}")
+        else:
+            lines.append(f"👤 {name}")
+    return "\n".join(lines)
+
+
+def networking_form_text(step: int) -> str:
+    prompts = {
+        1: "Шаг 1/3: расскажи о себе (короткое bio одним сообщением).",
+        2: "Шаг 2/3: твой стек (например, Python/Django).",
+        3: "Шаг 3/3: оставь контакт (@username или ссылка).",
+    }
+    return prompts[step]
+
+
+def networking_card_text(profile) -> str:
+    name = _profile_name(profile)
+    stack = (profile.stack or "").strip()
+    header = f"👤 {name}"
+    if stack:
+        header += f" · {_safe(stack)}"
+    lines = [header]
+    bio = (profile.bio or "").strip()
+    if bio:
+        lines.append(f"«{_safe(bio)}»")
+    lines += ["", f"Контакт: {_safe(profile.contact)}"]
+    return "\n".join(lines)
