@@ -11,4 +11,5 @@ class State(Enum):
     NET_FORM_STACK = auto()
     NET_FORM_CONTACT = auto()
     NET_MATCHING = auto()
+    NET_FAVORITES = auto()
     DON_AWAIT_AMOUNT = auto()

@@ -1,5 +1,6 @@
 from asgiref.sync import sync_to_async
 from django.core.paginator import Paginator
+from django.db.models import Count, Q
 
 from metup_bot.models import Question, Talk, User
 
@@ -14,7 +15,11 @@ def create_question(tg_id: int, talk: Talk, text: str) -> Question:
 def get_questions_paginated(
     talk: Talk, page: int = 1, page_size: int = 5
 ) -> tuple[list[Question], int]:
-    queryset = Question.objects.filter(talk=talk).order_by("-created_at")
+    queryset = (
+        Question.objects.filter(talk=talk)
+        .order_by("-created_at")
+        .select_related("author__telegram_profile")
+    )
     paginator = Paginator(queryset, page_size)
     page_obj = paginator.get_page(page)
     return list(page_obj.object_list), paginator.num_pages
@@ -22,13 +27,21 @@ def get_questions_paginated(
 
 @sync_to_async
 def get_question(question_id: int) -> Question | None:
-    return Question.objects.filter(pk=question_id).first()
+    return (
+        Question.objects.filter(pk=question_id)
+        .select_related("author__telegram_profile")
+        .first()
+    )
 
 
 @sync_to_async
 def mark_answered(question_id: int) -> Question | None:
     Question.objects.filter(pk=question_id).update(is_answered=True)
-    return Question.objects.filter(pk=question_id).first()
+    return (
+        Question.objects.filter(pk=question_id)
+        .select_related("author__telegram_profile")
+        .first()
+    )
 
 
 @sync_to_async
@@ -38,3 +51,12 @@ def unanswered_count_for_user(tg_id: int) -> int:
         talk__event__is_current=True,
         is_answered=False,
     ).count()
+
+
+@sync_to_async
+def questions_stats_for_talk(talk: Talk) -> tuple[int, int]:
+    stats = Question.objects.filter(talk=talk).aggregate(
+        total=Count("id"),
+        unanswered=Count("id", filter=Q(is_answered=False)),
+    )
+    return stats["total"], stats["unanswered"]

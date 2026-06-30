@@ -42,6 +42,30 @@ def get_random_unviewed_profile(
         NetworkingProfile.objects.filter(is_published=True)
         .exclude(user__telegram_profile__telegram_id=viewer_tg_id)
         .exclude(pk__in=exclude_ids)
+        .select_related("user__telegram_profile")
         .order_by("?")
         .first()
+    )
+
+
+@sync_to_async
+def has_other_published_profiles(viewer_tg_id: int) -> bool:
+    return (
+        NetworkingProfile.objects.filter(is_published=True)
+        .exclude(user__telegram_profile__telegram_id=viewer_tg_id)
+        .exists()
+    )
+
+
+@sync_to_async
+def get_profiles_by_ids(profile_ids: list[int]) -> list:
+    if not profile_ids:
+        return []
+    return list(
+        NetworkingProfile.objects.filter(
+            pk__in=profile_ids,
+            is_published=True,
+        )
+        .select_related("user__telegram_profile")
+        .order_by("?")
     )
