@@ -6,7 +6,9 @@ from tg_bot.callbacks import Callback, CallbackButton
 
 
 def get_main_menu(
-    roles: set[str], unanswered_count: int = 0
+    roles: set[str],
+    unanswered_count: int = 0,
+    future_events_count: int = 0,
 ) -> InlineKeyboardMarkup:
     rows = [
         [
@@ -18,6 +20,10 @@ def get_main_menu(
             CallbackButton("💰 Донат", Callback.DONATE),
         ],
     ]
+    if future_events_count > 0:
+        rows.append(
+            [CallbackButton("📋 Будущие мероприятия", Callback.FUTURE_EVENTS)]
+        )
     if "speaker" in roles:
         if unanswered_count > 0:
             label = f"🎤 Мой доклад ({unanswered_count})"
@@ -239,5 +245,44 @@ def get_donation_payment_menu(
                 )
             ],
             [CallbackButton("Меню", Callback.MENU)],
+        ]
+    )
+
+
+def get_future_events_menu(events) -> InlineKeyboardMarkup:
+    rows = []
+    for event in events:
+        rows.append(
+            [
+                CallbackButton(
+                    event.title, Callback.FUTURE_EVENT, event_id=event.id
+                )
+            ]
+        )
+    rows.append([CallbackButton("Меню", Callback.MENU)])
+    return InlineKeyboardMarkup(rows)
+
+
+def get_future_event_sign_menu(event_id: int) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        [
+            [
+                CallbackButton(
+                    "🟢 Записаться гостем",
+                    Callback.FUTURE_SIGN_GUEST,
+                    event_id=event_id,
+                )
+            ],
+            [
+                CallbackButton(
+                    "🎤 Записаться спикером",
+                    Callback.FUTURE_SIGN_SPEAKER,
+                    event_id=event_id,
+                )
+            ],
+            [
+                CallbackButton("⬅️ К списку", Callback.FUTURE_EVENTS),
+                CallbackButton("Меню", Callback.MENU),
+            ],
         ]
     )

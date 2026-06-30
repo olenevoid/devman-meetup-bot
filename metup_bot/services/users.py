@@ -27,3 +27,15 @@ def get_or_create_profile(tg_id: int, username: str = "") -> TelegramProfile:
         profile.telegram_username = username
         profile.save(update_fields=["telegram_username"])
     return profile
+
+
+@sync_to_async
+def assign_role(tg_id: int, role: str) -> bool:
+    from django.core.exceptions import ObjectDoesNotExist
+
+    try:
+        user = User.objects.get(telegram_profile__telegram_id=tg_id)
+    except ObjectDoesNotExist:
+        raise ValueError(f"No user for tg_id {tg_id}")
+    _, created = UserRole.objects.get_or_create(user=user, role=role)
+    return created

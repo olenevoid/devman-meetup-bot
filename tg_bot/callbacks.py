@@ -36,6 +36,11 @@ class Callback(StrEnum):
     SPK_QUESTION = auto()
     SPK_ANSWER = auto()
 
+    FUTURE_EVENTS = auto()
+    FUTURE_EVENT = auto()
+    FUTURE_SIGN_GUEST = auto()
+    FUTURE_SIGN_SPEAKER = auto()
+
 
 class CallbackData:
     def __init__(self, name: Callback, params: dict | None = None):

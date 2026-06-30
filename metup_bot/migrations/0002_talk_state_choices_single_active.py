@@ -7,22 +7,38 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('metup_bot', '0001_initial'),
+        ("metup_bot", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='talk',
-            name='state',
-            field=models.CharField(choices=[('planned', 'Planned'), ('active', 'Active'), ('finished', 'Finished')], default='planned', max_length=20),
+            model_name="talk",
+            name="state",
+            field=models.CharField(
+                choices=[
+                    ("planned", "Planned"),
+                    ("active", "Active"),
+                    ("finished", "Finished"),
+                ],
+                default="planned",
+                max_length=20,
+            ),
         ),
         migrations.AddConstraint(
-            model_name='event',
-            constraint=models.UniqueConstraint(condition=models.Q(('is_current', True)), fields=('is_current',), name='single_current_event'),
+            model_name="event",
+            constraint=models.UniqueConstraint(
+                condition=models.Q(("is_current", True)),
+                fields=("is_current",),
+                name="single_current_event",
+            ),
         ),
         migrations.AddConstraint(
-            model_name='talk',
-            constraint=models.UniqueConstraint(condition=models.Q(('state', 'active')), fields=('event',), name='single_active_talk_per_event'),
+            model_name="talk",
+            constraint=models.UniqueConstraint(
+                condition=models.Q(("state", "active")),
+                fields=("event",),
+                name="single_active_talk_per_event",
+            ),
         ),
     ]
