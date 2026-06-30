@@ -3,7 +3,9 @@ from telegram import InlineKeyboardMarkup
 from tg_bot.callbacks import Callback, CallbackButton
 
 
-def get_main_menu(roles: set[str]) -> InlineKeyboardMarkup:
+def get_main_menu(
+    roles: set[str], unanswered_count: int = 0
+) -> InlineKeyboardMarkup:
     rows = [
         [
             CallbackButton("📅 Программа", Callback.SHOW_PROGRAM),
@@ -15,14 +17,38 @@ def get_main_menu(roles: set[str]) -> InlineKeyboardMarkup:
         ],
     ]
     if "speaker" in roles:
-        rows.append(
-            [CallbackButton("🎤 Мой доклад", Callback.SPEAKER_CABINET)]
-        )
+        if unanswered_count > 0:
+            label = f"🎤 Мой доклад ({unanswered_count})"
+        else:
+            label = "🎤 Мой доклад"
+        rows.append([CallbackButton(label, Callback.SPEAKER_CABINET)])
     return InlineKeyboardMarkup(rows)
 
 
 def menu_only() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup([[CallbackButton("Меню", Callback.MENU)]])
+
+
+def get_ask_prompt_menu() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        [
+            [
+                CallbackButton("✖️ Отмена", Callback.MENU),
+                CallbackButton("Меню", Callback.MENU),
+            ]
+        ]
+    )
+
+
+def get_question_sent_menu() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        [
+            [
+                CallbackButton("❓ Ещё вопрос", Callback.ASK_SPEAKER),
+                CallbackButton("Меню", Callback.MENU),
+            ]
+        ]
+    )
 
 
 def get_program_menu(has_active_talk: bool) -> InlineKeyboardMarkup:
